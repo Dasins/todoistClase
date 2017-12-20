@@ -47,12 +47,14 @@ public class Tarea
     /**
      * Imprime por la terminal de texto la lista de tareas numeradas.
      */
-    public void imprimirTarea(int numeroPosicion){
+    public String devolverTarea(int numeroPosicion){
+        String tareaADevolver = tarea;
         if (estado){
-            System.out.println(numeroPosicion + ". [x] " + tarea);
+            tareaADevolver = numeroPosicion + ". [x] " + tarea;
         }
         else {
-            System.out.println(numeroPosicion + ". [ ] " + tarea);
+            tareaADevolver = numeroPosicion + ". [ ] " + tarea;
         }
+        return tareaADevolver;
     }
 }

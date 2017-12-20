@@ -34,7 +34,7 @@ class TodoistClase
     {
         int numeroPosicion = 1;
         for (Tarea tarea : tareas){
-            tarea.imprimirTarea(numeroPosicion);
+            System.out.println(tarea.devolverTarea(numeroPosicion));
             numeroPosicion = numeroPosicion + 1;
         }
     }
