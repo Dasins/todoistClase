@@ -45,7 +45,7 @@ public class Tarea
     }
     
     /**
-     * Imprime por la terminal de texto la lista de tareas numeradas.
+     * Devuelve la tarea, inserta un [x] si esta completada o un [ ] si no.
      */
     public String devolverTarea(int numeroPosicion){
         String tareaADevolver = tarea;
