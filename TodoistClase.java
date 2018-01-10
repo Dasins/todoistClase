@@ -47,13 +47,15 @@ class TodoistClase
     
     /**
      * Cambia la prioridad de una tarea.
-     * Se da por supuesto que los valores son legales.
+     * Si los valores no son legales no hace nada.
      * 
      * @param indiceTarea La posición en el Array de la tarea. 0 para la primera.
      * @param prioridad El nuevo valor de prioridad
      */
     public void setPrioridad(int indiceTarea, int prioridad){
-        tareas.get(indiceTarea).setPrioridad(prioridad);
+        if (indiceTarea >= 0 && indiceTarea < tareas.size()){  
+            tareas.get(indiceTarea).setPrioridad(prioridad);
+        }
     }
     
     /**

@@ -50,7 +50,7 @@ public class Tarea
     
     /**
      * Cambia la prioridad de la tarea.
-     * Se da por supuesto que se introducen valores legales.
+     * Si los valores no son legales no hace nada.
      * 
      * @param prioridad El nuevo valor de la prioridad.
      */
