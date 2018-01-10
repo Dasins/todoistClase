@@ -14,13 +14,17 @@ public class Tarea
     // True cuando esta completada 
     // False en cualquier otro caso
     private boolean estado;
+    // La prioridad
+    // La prioridad va de 1 a 5. 1 Menor prioridad - 5 Mayor prioridad
+    private int prioridad;
 
     /**
-     * Constructor for objects of class Tarea
+     * Constructor de objetos de la clase Tarea
      */
     public Tarea(String tarea){
         estado = false;
         this.tarea = tarea;
+        prioridad = 1;
     }
 
     /**
@@ -29,14 +33,14 @@ public class Tarea
     public String getTarea(){
         return tarea;
     }
-    
+
     /**
      * @return Devuelve el contenido de la tarea
      */
     public boolean getEstado(){
         return estado;
     }
-    
+
     /**
      * Marca como completada una tarea
      */
@@ -45,16 +49,30 @@ public class Tarea
     }
     
     /**
+     * Cambia la prioridad de la tarea.
+     * Se da por supuesto que se introducen valores legales.
+     * 
+     * @param prioridad El nuevo valor de la prioridad.
+     */
+    public void setPrioridad(int prioridad){
+        if (prioridad >= 1 && prioridad <= 5) { 
+            this.prioridad = prioridad;
+        }
+    }
+
+    /**
      * Devuelve la tarea, inserta un [x] si esta completada o un [ ] si no.
      */
     public String devolverTarea(int numeroPosicion){
         String tareaADevolver = tarea;
+        String textoPrioridad = "#Prioridad: " + prioridad + "# ";
         if (estado){
-            tareaADevolver = numeroPosicion + ". [x] " + tarea;
+            tareaADevolver = numeroPosicion + ". [x] " + textoPrioridad  + tarea;
         }
         else {
-            tareaADevolver = numeroPosicion + ". [ ] " + tarea;
+            tareaADevolver = numeroPosicion + ". [ ] " + textoPrioridad + tarea;
         }
         return tareaADevolver;
     }
+    
 }
