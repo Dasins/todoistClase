@@ -65,12 +65,12 @@ public class Tarea
      */
     public String devolverTarea(int numeroPosicion){
         String tareaADevolver = tarea;
-        String textoPrioridad = "#Prioridad: " + prioridad + "# ";
+        String textoPrioridad = numeroPosicion + ". #Prioridad: " + prioridad + "# ";
         if (estado){
-            tareaADevolver = numeroPosicion + ". [x] " + textoPrioridad  + tarea;
+            tareaADevolver =  "[x] " + textoPrioridad  + tarea;
         }
         else {
-            tareaADevolver = numeroPosicion + ". [ ] " + textoPrioridad + tarea;
+            tareaADevolver = "[ ] " + textoPrioridad + tarea;
         }
         return tareaADevolver;
     }
