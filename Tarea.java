@@ -1,7 +1,9 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
- * Clase que modela un objeto tarea que indica el contenido de la tarea
- * y su estado (si esta completada o no)
+ * Clase que modela un objeto tarea que indica el contenido de la tarea, su prioridad y 
+ * su estado (si esta completada o no).
  *
  * @author Dasins
  * @version 20/12/2017
@@ -17,6 +19,8 @@ public class Tarea
     // La prioridad
     // La prioridad va de 1 a 5. 1 Menor prioridad - 5 Mayor prioridad
     private int prioridad;
+    // La fecha de vencimiento.
+    private LocalDate fechaLimite;
 
     /**
      * Constructor de objetos de la clase Tarea
@@ -25,6 +29,7 @@ public class Tarea
         estado = false;
         this.tarea = tarea;
         prioridad = 1;
+        fechaLimite = null;
     }
 
     /**
@@ -39,6 +44,20 @@ public class Tarea
      */
     public boolean getEstado(){
         return estado;
+    }
+    
+    /**
+     * @return Devuelve la prioridad de la tarea
+     */
+    public int getPrioridad(){
+        return prioridad;
+    }
+    
+    /**
+     * @return Devuelve la prioridad de la tarea
+     */
+    public LocalDate getFechaLimite(){
+        return fechaLimite;
     }
 
     /**
@@ -63,16 +82,39 @@ public class Tarea
     /**
      * Devuelve la tarea, inserta un [x] si esta completada o un [ ] si no.
      */
-    public String devolverTarea(int numeroPosicion){
+    public String devolverTarea(){
         String tareaADevolver = tarea;
-        String textoPrioridad = numeroPosicion + ". #Prioridad: " + prioridad + "# ";
+        String texto =". #Prioridad: " + prioridad + "# ";
         if (estado){
-            tareaADevolver =  "[x] " + textoPrioridad  + tarea;
+            tareaADevolver =  "[x] " + texto  + tarea;
         }
         else {
-            tareaADevolver = "[ ] " + textoPrioridad + tarea;
+            tareaADevolver = "[ ] " + texto + tarea;
+        }
+        if(fechaLimite != null) {
+            tareaADevolver += " Fecha limite: " + formatearFechaSP(fechaLimite,"dd' de 'MMMM' de 'yyyy" );
         }
         return tareaADevolver;
     }
+    
+    /**
+     * Anade una fecha de limite a la tarea
+     * @param dia El dia de la fecha limite
+     * @param mes El mes de la fecha limite
+     * @param ano El ano de la fecha limite
+     */
+    public void setFechaLimite(int dia, int mes, int ano) {
+        fechaLimite = LocalDate.of(ano,mes,dia);
+    }
+    
+    /**
+     * @return Devuelve una fecha con un determinado formato con el ISO de Espana.
+     */
+    public String formatearFechaSP(LocalDate fecha, String format) {
+        String fechaFormateada = fechaLimite.format(DateTimeFormatter.ISO_DATE);
+        fechaFormateada = fecha.format(DateTimeFormatter.ofPattern(format));
+        return fechaFormateada;
+    }
+    
     
 }

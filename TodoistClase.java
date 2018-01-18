@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 /**
  * Clase que modela objetos que permiten almacenar tareas.
@@ -30,8 +31,9 @@ class TodoistClase
      */
     public void mostrarTareasNumeradas(){
         int numeroPosicion = 1;
+        System.out.println("");
         for (Tarea tarea : tareas){
-            System.out.println(tarea.devolverTarea(numeroPosicion));
+            System.out.println(numeroPosicion + " " + tarea.devolverTarea());
             numeroPosicion = numeroPosicion + 1;
         }
     }
@@ -62,7 +64,7 @@ class TodoistClase
      * Imprime en la terminal de texto las tareas completadas, las incompletas, el porcentaje de cada una sobre el total
      * y las tareas totales.
      */
-    public void printEstadisticas (){
+    public void printEstadisticas(){
         int tareasTotales = tareas.size();
         int tareasCompletadas = 0;
         for (Tarea tarea : tareas){
@@ -78,7 +80,7 @@ class TodoistClase
     /** 
      * Añade tareas random
      */
-    public void test() {
+    public void test(){
         addTarea("Comerse al perro");
         addTarea("Pasear a la suegra");
         addTarea("Limpiar la basura");
@@ -89,5 +91,116 @@ class TodoistClase
         addTarea("Invocar al maligno");
         addTarea("Ordenarse sacerdote");
         addTarea("Tener dulces pesadillas");
+        setFechaVencimiento(4, 18, 1, 2017);
+        setFechaVencimiento(3, 18, 1, 2017);
+        setFechaVencimiento(2, 18, 1, 2017);
+        setFechaVencimiento(1, 19, 2, 2017);
     }
+    
+    /**
+     * Imprime todos los datos de la tarea con mayor prioridad. Si hay varias, devuelve la última encontrada. 
+     */
+    public void printTareaPrioritaria(){
+        if (tareas.size() > 0){
+            Tarea tareaPrioritaria = tareas.get(0);
+            for(Tarea tareaActual : tareas){
+                if (tareaActual.getPrioridad() >= tareaPrioritaria.getPrioridad()){
+                   tareaPrioritaria = tareaActual;
+                }
+            }
+            //System.out.println(tareas.indexOf(tareaPrioritaria.getTarea()) +
+            //                   " " + tareaPrioritaria.devolverTarea());
+            System.out.println(tareaPrioritaria.devolverTarea());
+        }
+    }
+   
+    /**
+    * Imprime todos los datos de la tarea con menor prioridad. 
+    * Si hay empate,imprime por pantalla los datos de la última encontrada.
+    * Si no hay tareas,no imprime nada.
+    */
+    public void printTareaMenosPrioritaria(){
+        if (tareas.size() > 0){
+            Tarea tareaMenosPrioritaria = tareas.get(0);
+            for(Tarea tareaActual : tareas){
+                if (tareaActual.getPrioridad() <= tareaMenosPrioritaria.getPrioridad()){
+                   tareaMenosPrioritaria = tareaActual;
+                }
+            }
+            System.out.println(tareas.indexOf(tareaMenosPrioritaria) + " " + tareaMenosPrioritaria.devolverTarea());
+        }
+    }
+    
+    /**
+     * Anade una fecha limite a una tarea especifica
+     * @param index El indice que ocupa la tarea.
+     * @param dia El dia de la fecha limite
+     * @param mes El mes de la fecha limite
+     * @param ano El ano de la fecha limite
+     */
+    public void setFechaVencimiento(int index, int dia, int mes, int ano) {
+        if (index < tareas.size()){
+            tareas.get(index).setFechaLimite(dia,mes,ano);
+        }
+    }
+    
+    /**
+    * Muestra la tarea con la fecha tope más inminente. Si hay empate,
+    * muestra todas las empatadas. Si no hay ninguna con fecha tope no muestra nada
+    */
+    public void printTareaMasUrgente() {
+        ArrayList<Tarea> tareasAImprimir = new ArrayList<>();
+        LocalDate fechaInminente = LocalDate.now();
+        for(Tarea tarea : tareas) {
+            LocalDate tareaFechaActual = tarea.getFechaLimite();
+            if (tareaFechaActual != null){
+               if (tareaFechaActual.isBefore(fechaInminente) || tareaFechaActual.isEqual(fechaInminente)){
+                  if (tareaFechaActual.isBefore(fechaInminente)){
+                      fechaInminente = tareaFechaActual;
+                      tareasAImprimir = new ArrayList<>();
+                      tareasAImprimir.add(tarea);
+                  }
+                  else if (tareaFechaActual.isEqual(fechaInminente)){
+                      tareasAImprimir.add(tarea);
+                  }
+               }
+            }
+        }
+        
+        for (Tarea tarea : tareasAImprimir){
+            System.out.println(tarea.devolverTarea());
+        }
+    }
+    
+    /**
+    * Muestra la tarea con la fecha tope menos urgente. Si hay empate,
+    * muestra todas las empatadas. Si no hay ninguna con fecha tope no muestra nada
+    */
+   public void printTareaMenosUrgente() {
+        ArrayList<Tarea> tareasAImprimir = new ArrayList<>();
+        LocalDate fechaInminente = LocalDate.now();
+        for(Tarea tarea : tareas) {
+            LocalDate tareaFechaActual = tarea.getFechaLimite();
+            if (tareaFechaActual != null){
+               if (tareaFechaActual.isBefore(fechaInminente) || tareaFechaActual.isEqual(fechaInminente)) {
+                   if (tareaFechaActual.isAfter(fechaInminente)){
+                      fechaInminente = tareaFechaActual;
+                      tareasAImprimir = new ArrayList<>();
+                      tareasAImprimir.add(tarea);
+                  }
+                  else if (tareaFechaActual.isEqual(fechaInminente)){
+                      tareasAImprimir.add(tarea);
+                  }
+               }
+            }
+        }
+        
+        for (Tarea tarea : tareasAImprimir){
+            System.out.println(tarea.devolverTarea());
+        }
+   }
+   
+   
 }
+
+
